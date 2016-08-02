@@ -2,7 +2,9 @@ var squids = [];
 var msgs = [];
 
 function startGame() {
-    squids[0] = new squid(10, 'red', 700/2, 700/2, 50, 50, 20,10);
+    squids[0] = new squid(5, 'red', 700/2, 700/2, 50, 25, 20,10);
+    squids[1] = new squid(5, 'green', 700/4, 700/2.4, 30, 10, 50,0);
+    squids[2] = new squid(5, 'yellow', 700/1.5, 700/1.5, 40, 30, 50,7);
     msgs[0] = new msg('hello world', 20, 30);
     msgs[1] = new msg('hello world', 20, 50);
     msgs[2] = new msg('hello world', 20, 70);
@@ -29,9 +31,9 @@ function squid(size, shcolor, x, y, finlength, angles, rates, cangle) {
     this.y = y;
     this.shcolor = shcolor;
     this.finlength = [finlength, finlength*0.7, finlength*0.3];
-    this.angle = [angles, angles*1.2, angles*1.4];
+    this.angle = [angles, angles*0.7, angles*0.5];
     this.cangle = [cangle, cangle, cangle];
-    this.rate = [rates, rates, rates];
+    this.rate = [rates, rates*0.7, rates*0.3];
     this.update = function(){
         ctx = myGameArea.context;
         //draw head
@@ -82,12 +84,10 @@ function msg(text, x, y){
 
 function updateGameArea() {
     myGameArea.clear();
-    squids[0].update();
-    //msgs[0].text = 'squids: ' + squids.length;
-    //msgs[1].text = 'plants: ' + foods.length;
-    msgs[0].update();
-    msgs[1].update();
-    msgs[2].update();
+    for (j = 0; j < 3; j++) {
+      squids[j].update();
+      msgs[j].update();
+    }
 }
 
 

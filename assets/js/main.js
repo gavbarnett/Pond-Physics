@@ -33,7 +33,7 @@ function squid(size, shcolor, x, y, finlength, angles, rates, cangle) {
     this.finlength = [finlength, finlength*0.7, finlength*0.3];
     this.angle = [angles, angles*0.7, angles*0.5];
     this.cangle = [cangle, cangle, cangle];
-    this.rate = [rates, rates*0.7, rates*0.3];
+    this.rate = [rates, rates, rates];
     this.update = function(){
         ctx = myGameArea.context;
         //draw head

@@ -27,7 +27,7 @@ var myGameArea = {
         this.canvas.height = 700;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
+        this.interval = setInterval(updateGameArea, 1);
     },
     clear : function() {
         this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -72,12 +72,18 @@ function squid(size, shcolor, x, y, finlength, angles, rates, cangle, offset) {
           var finlength2;
           var angles2;
           var rates2;
+          var y_temp;
+          var x_temp;
+          var A_temp = 0;
           for (i = 0; i < 50; i++) {
             offset2 = [this.offset[0]*(0.8+0.4*Math.random()),this.offset[1]*(0.8+0.4*Math.random()), this.offset[2]*(0.8+0.4*Math.random())];
             finlength2 = [this.finlength[0]*(0.8+0.4*Math.random()),this.finlength[1]*(0.8+0.4*Math.random()), this.finlength[2]*(0.8+0.4*Math.random())];
             rates2 = [this.rate[0]*(0.8+0.4*Math.random()),this.rate[1]*(0.8+0.4*Math.random()), this.rate[2]*(0.8+0.4*Math.random())];
             angles2 = [(this.angle[0]-this.offset[0])*(0.8+0.4*Math.random())+offset2[0],(this.angle[1]-this.offset[1])*(0.8+0.4*Math.random())+offset2[1], (this.angle[2]-this.offset[2])*(0.8+0.4*Math.random())+offset2[2]];
-            squids[i] = new squid(5, 'red', Math.random()*700, Math.random()*700, finlength2, angles2, rates2, 0, offset2);
+            x_temp = 700/2+250*(Math.sin(A_temp/180*Math.PI));
+            y_temp = 700/2+250*(Math.cos(A_temp/180*Math.PI));
+            A_temp += (360/50);
+            squids[i] = new squid(5, 'red', x_temp, y_temp, finlength2, angles2, rates2, 0, offset2);
           }
           A_temp_Global = [700/2, 700/2];
         }
@@ -94,7 +100,7 @@ function squid(size, shcolor, x, y, finlength, angles, rates, cangle, offset) {
             }
           //  this.rate[i] = -1 * this.rate[i];
           }
-          msgs[i].text = this.angle[i] + '  ' + this.cangle[i];
+          //msgs[i].text = this.angle[i] + '  ' + this.cangle[i];
           ctx.beginPath();
           ctx.moveTo(x_temp, y_temp);
           x_temp += this.finlength[i]*Math.sin((this.cangle[i]+A_temp)/180*Math.PI);
@@ -140,7 +146,7 @@ function msg(text, x, y){
 
 function updateGameArea() {
     var fpstime2 = new Date;
-    //msgs[0].text = Math.round((msgs[0].text*4 + 1000/(fpstime2 - fpstime))/5);
+    msgs[0].text = Math.round((msgs[0].text*4 + 1000/(fpstime2 - fpstime))/5);
     fpstime = fpstime2;
     myGameArea.clear();
     ctx = myGameArea.context;
@@ -154,6 +160,7 @@ function updateGameArea() {
     for (j = 0; j < 50; j++) {
       squids[j].update();
     }
+    msgs[0].update();
 
 }
 
